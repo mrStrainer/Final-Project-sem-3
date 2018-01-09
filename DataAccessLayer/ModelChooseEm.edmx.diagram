@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5909c5a2a3744885844d5f97660f2583" Name="Diagram1" ZoomLevel="94" DisplayType="true">
+        <EntityTypeShape EntityType="ModelChooseEm.BlacklistTable" PointX="7.5" PointY="9.25" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.PartyTable" PointX="5.25" PointY="7.375" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.SongRatingFromPartyTable" PointX="9.75" PointY="6.25" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.SongsForPartyTable" PointX="7.5" PointY="6.75" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.sysdiagram" PointX="0.75" PointY="0.75" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.UserLoginTable" PointX="5.25" PointY="14.125" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.UsersAtParty" PointX="7.5" PointY="4" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.UserTable" PointX="3" PointY="5.875" Width="1.5" />
+        <EntityTypeShape EntityType="ModelChooseEm.ZIPTable" PointX="0.75" PointY="6.5" Width="1.5" />
+        <AssociationConnector Association="ModelChooseEm.FK_BlacklistTable_PartyTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_PartyTable_UserTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_SongsForPartyTable_PartyTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_UsersAtParties_PartyTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_SongRatingFromPartyTable_SongsForPartyTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_SongRatingFromPartyTable_UserTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_Table_ToTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_UsersAtParties_UserTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_UserTable_ZIPTable" />
+        <EntityTypeShape EntityType="ModelChooseEm.FriendTable" Width="1.5" PointX="5.25" PointY="4.5" />
+        <AssociationConnector Association="ModelChooseEm.FK_FriendTable_UserTable" />
+        <AssociationConnector Association="ModelChooseEm.FK_FriendTable_UserTable1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/DataAccessLayer" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/DataAccessLayer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="UserTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FriendTables" nillable="true" type="tns:ArrayOfFriendTable" />
+      <xs:element minOccurs="0" name="FriendTables1" nillable="true" type="tns:ArrayOfFriendTable" />
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="PartyTables" nillable="true" type="tns:ArrayOfPartyTable" />
+      <xs:element minOccurs="0" name="SongRatingFromPartyTables" nillable="true" type="tns:ArrayOfSongRatingFromPartyTable" />
+      <xs:element minOccurs="0" name="UserLoginTables" nillable="true" type="tns:ArrayOfUserLoginTable" />
+      <xs:element minOccurs="0" name="UsersAtParties" nillable="true" type="tns:ArrayOfUsersAtParty" />
+      <xs:element minOccurs="0" name="ZIPTable" nillable="true" type="tns:ZIPTable" />
+      <xs:element minOccurs="0" name="accountType" type="xs:boolean" />
+      <xs:element minOccurs="0" name="currentPartyID" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="zip" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserTable" nillable="true" type="tns:UserTable" />
+  <xs:complexType name="ArrayOfFriendTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FriendTable" nillable="true" type="tns:FriendTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFriendTable" nillable="true" type="tns:ArrayOfFriendTable" />
+  <xs:complexType name="FriendTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="UserTable" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="UserTable1" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="idOne" type="xs:long" />
+      <xs:element minOccurs="0" name="idTwo" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FriendTable" nillable="true" type="tns:FriendTable" />
+  <xs:complexType name="ArrayOfPartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PartyTable" nillable="true" type="tns:PartyTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPartyTable" nillable="true" type="tns:ArrayOfPartyTable" />
+  <xs:complexType name="PartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvailablePlaces" type="xs:short" />
+      <xs:element minOccurs="0" name="BlacklistTables" nillable="true" type="tns:ArrayOfBlacklistTable" />
+      <xs:element minOccurs="0" name="ID" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RowVersion" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="SongsForPartyTables" nillable="true" type="tns:ArrayOfSongsForPartyTable" />
+      <xs:element minOccurs="0" name="UserTable" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="UsersAtParties" nillable="true" type="tns:ArrayOfUsersAtParty" />
+      <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="locationLatitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="locationLongitude" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ownerID" type="xs:long" />
+      <xs:element minOccurs="0" name="privacy" type="xs:boolean" />
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartyTable" nillable="true" type="tns:PartyTable" />
+  <xs:complexType name="ArrayOfBlacklistTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BlacklistTable" nillable="true" type="tns:BlacklistTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBlacklistTable" nillable="true" type="tns:ArrayOfBlacklistTable" />
+  <xs:complexType name="BlacklistTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PartyTable" nillable="true" type="tns:PartyTable" />
+      <xs:element minOccurs="0" name="partyID" type="xs:long" />
+      <xs:element minOccurs="0" name="songURL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BlacklistTable" nillable="true" type="tns:BlacklistTable" />
+  <xs:complexType name="ArrayOfSongsForPartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SongsForPartyTable" nillable="true" type="tns:SongsForPartyTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSongsForPartyTable" nillable="true" type="tns:ArrayOfSongsForPartyTable" />
+  <xs:complexType name="SongsForPartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PartyTable" nillable="true" type="tns:PartyTable" />
+      <xs:element minOccurs="0" name="RowVersion" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="SongRatingFromPartyTables" nillable="true" type="tns:ArrayOfSongRatingFromPartyTable" />
+      <xs:element minOccurs="0" name="partyID" type="xs:long" />
+      <xs:element minOccurs="0" name="rating" type="xs:int" />
+      <xs:element minOccurs="0" name="songURL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SongsForPartyTable" nillable="true" type="tns:SongsForPartyTable" />
+  <xs:complexType name="ArrayOfSongRatingFromPartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SongRatingFromPartyTable" nillable="true" type="tns:SongRatingFromPartyTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSongRatingFromPartyTable" nillable="true" type="tns:ArrayOfSongRatingFromPartyTable" />
+  <xs:complexType name="SongRatingFromPartyTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SongsForPartyTable" nillable="true" type="tns:SongsForPartyTable" />
+      <xs:element minOccurs="0" name="UserTable" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="partyID" type="xs:long" />
+      <xs:element minOccurs="0" name="songURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="userID" type="xs:long" />
+      <xs:element minOccurs="0" name="voteType" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SongRatingFromPartyTable" nillable="true" type="tns:SongRatingFromPartyTable" />
+  <xs:complexType name="ArrayOfUsersAtParty">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsersAtParty" nillable="true" type="tns:UsersAtParty" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsersAtParty" nillable="true" type="tns:ArrayOfUsersAtParty" />
+  <xs:complexType name="UsersAtParty">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PartyTable" nillable="true" type="tns:PartyTable" />
+      <xs:element minOccurs="0" name="UserTable" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="adminPrivileges" type="xs:boolean" />
+      <xs:element minOccurs="0" name="partyID" type="xs:long" />
+      <xs:element minOccurs="0" name="status" type="xs:short" />
+      <xs:element minOccurs="0" name="userID" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsersAtParty" nillable="true" type="tns:UsersAtParty" />
+  <xs:complexType name="ArrayOfUserLoginTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserLoginTable" nillable="true" type="tns:UserLoginTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserLoginTable" nillable="true" type="tns:ArrayOfUserLoginTable" />
+  <xs:complexType name="UserLoginTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserTable" nillable="true" type="tns:UserTable" />
+      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="userID" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserLoginTable" nillable="true" type="tns:UserLoginTable" />
+  <xs:complexType name="ZIPTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="UserTables" nillable="true" type="tns:ArrayOfUserTable" />
+      <xs:element minOccurs="0" name="city" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="zip" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ZIPTable" nillable="true" type="tns:ZIPTable" />
+  <xs:complexType name="ArrayOfUserTable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserTable" nillable="true" type="tns:UserTable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserTable" nillable="true" type="tns:ArrayOfUserTable" />
+</xs:schema>

@@ -1,0 +1,48 @@
+﻿@model MVC_ChooseEm.Models.UserModel
+@{
+    ViewBag.Title = "Add";
+}
+<meta name="viewport" content="width=device-width" />
+@using (Html.BeginForm())
+
+{  <h2>Add User</h2>
+    <div style="text-align:center">
+        <table>
+            <tr >
+                <td>
+                    First name :
+                    </td>
+                <td>
+                    @Html.TextBoxFor(m => m.firstName)
+                </td>
+                <td>
+                    Last name :
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.lastName)
+                </td>
+                <td>
+                    Account Type :
+                </td>
+                <td>
+                    @Html.CheckBoxFor(m => m.accountType)
+                </td>
+                <td>
+                    Zip :
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.zip)
+                </td>
+                <td>
+                    Party :
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.currentPartyID)
+                </td>
+                <td>
+                    <input type="submit" value="Submit" />
+                </td>
+                </tr>
+        </table>
+    </div>
+}

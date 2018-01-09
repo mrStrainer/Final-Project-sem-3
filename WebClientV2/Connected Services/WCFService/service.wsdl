@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="TCPEndpoint_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="HttpEndpoint_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
+        <cdp:CompositeDuplex xmlns:cdp="http://schemas.microsoft.com/net/2006/06/duplex" />
+        <ow:OneWay xmlns:ow="http://schemas.microsoft.com/ws/2005/05/routing/policy" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8079/WCFService/Service/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8079/WCFService/Service/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8079/WCFService/Service/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFService" />
+      <xsd:import schemaLocation="http://localhost:8079/WCFService/Service/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DataAccessLayer" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_RegisterClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterClient" />
+  </wsdl:message>
+  <wsdl:message name="IService_NotifyServer_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyServer" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUser" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddLogInAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLogInAccount" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddLogInAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLogInAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetPartyById_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartyById" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetPartyById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPartyByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllParties_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllParties" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllParties_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPartiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllNotJoinedParties_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNotJoinedParties" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllNotJoinedParties_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNotJoinedPartiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllJoinedParties_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllJoinedParties" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllJoinedParties_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllJoinedPartiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetOwner_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOwner" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetOwner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOwnerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemovePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateUserAtParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserAtParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateUserAtParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateUserAtPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUserForID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserForID" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUserForID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserForIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsers" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUserAfterFK_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAfterFK" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUserAfterFK_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAfterFKResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllPartiesOfUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPartiesOfUser" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllPartiesOfUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPartiesOfUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveUserAtParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserAtParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveUserAtParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserAtPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateUserAtParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserAtParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateUserAtParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserAtPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddSongInPartyPlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSongInPartyPlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddSongInPartyPlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSongInPartyPlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetSongFromPartyPlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSongFromPartyPlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetSongFromPartyPlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSongFromPartyPlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllSongs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSongs" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllSongs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllSongsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveSongFromPartyPlaylist_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSongFromPartyPlaylist" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveSongFromPartyPlaylist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSongFromPartyPlaylistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateSongsForParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSongsForParty" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateSongsForParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSongsForPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddRating_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddRating" />
+  </wsdl:message>
+  <wsdl:message name="IService_AddRating_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddRatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CalculateTotalSongRating_InputMessage">
+    <wsdl:part name="parameters" element="tns:CalculateTotalSongRating" />
+  </wsdl:message>
+  <wsdl:message name="IService_CalculateTotalSongRating_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CalculateTotalSongRatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllRatings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRatings" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllRatings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRatingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveRating_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveRating" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveRating_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveRatingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_VoteSong_InputMessage">
+    <wsdl:part name="parameters" element="tns:VoteSong" />
+  </wsdl:message>
+  <wsdl:message name="IService_VoteSong_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VoteSongResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_BroadcastToClient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:BroadcastToClient" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="true" name="IService">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RegisterClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RegisterClient" message="tns:IService_RegisterClient_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyServer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/NotifyServer" message="tns:IService_NotifyServer_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CreateUser" message="tns:IService_CreateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CreateUserResponse" message="tns:IService_CreateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetUser" message="tns:IService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetUserResponse" message="tns:IService_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddLogInAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/AddLogInAccount" message="tns:IService_AddLogInAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/AddLogInAccountResponse" message="tns:IService_AddLogInAccount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CreateParty" message="tns:IService_CreateParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CreatePartyResponse" message="tns:IService_CreateParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetPartyById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetPartyById" message="tns:IService_GetPartyById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetPartyByIdResponse" message="tns:IService_GetPartyById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllParties">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllParties" message="tns:IService_GetAllParties_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllPartiesResponse" message="tns:IService_GetAllParties_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllNotJoinedParties">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllNotJoinedParties" message="tns:IService_GetAllNotJoinedParties_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllNotJoinedPartiesResponse" message="tns:IService_GetAllNotJoinedParties_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllJoinedParties">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllJoinedParties" message="tns:IService_GetAllJoinedParties_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllJoinedPartiesResponse" message="tns:IService_GetAllJoinedParties_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetOwner">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetOwner" message="tns:IService_GetOwner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetOwnerResponse" message="tns:IService_GetOwner_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RemoveParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveParty" message="tns:IService_RemoveParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemovePartyResponse" message="tns:IService_RemoveParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UpdateParty" message="tns:IService_UpdateParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UpdatePartyResponse" message="tns:IService_UpdateParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateUserAtParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CreateUserAtParty" message="tns:IService_CreateUserAtParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CreateUserAtPartyResponse" message="tns:IService_CreateUserAtParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetUserForID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetUserForID" message="tns:IService_GetUserForID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetUserForIDResponse" message="tns:IService_GetUserForID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllUsers" message="tns:IService_GetAllUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllUsersResponse" message="tns:IService_GetAllUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetUserAfterFK">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetUserAfterFK" message="tns:IService_GetUserAfterFK_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetUserAfterFKResponse" message="tns:IService_GetUserAfterFK_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllPartiesOfUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllPartiesOfUser" message="tns:IService_GetAllPartiesOfUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllPartiesOfUserResponse" message="tns:IService_GetAllPartiesOfUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RemoveUserAtParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveUserAtParty" message="tns:IService_RemoveUserAtParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveUserAtPartyResponse" message="tns:IService_RemoveUserAtParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateUserAtParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UpdateUserAtParty" message="tns:IService_UpdateUserAtParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UpdateUserAtPartyResponse" message="tns:IService_UpdateUserAtParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddSongInPartyPlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/AddSongInPartyPlaylist" message="tns:IService_AddSongInPartyPlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/AddSongInPartyPlaylistResponse" message="tns:IService_AddSongInPartyPlaylist_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetSongFromPartyPlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetSongFromPartyPlaylist" message="tns:IService_GetSongFromPartyPlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetSongFromPartyPlaylistResponse" message="tns:IService_GetSongFromPartyPlaylist_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllSongs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllSongs" message="tns:IService_GetAllSongs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllSongsResponse" message="tns:IService_GetAllSongs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RemoveSongFromPartyPlaylist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveSongFromPartyPlaylist" message="tns:IService_RemoveSongFromPartyPlaylist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveSongFromPartyPlaylistResponse" message="tns:IService_RemoveSongFromPartyPlaylist_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateSongsForParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UpdateSongsForParty" message="tns:IService_UpdateSongsForParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UpdateSongsForPartyResponse" message="tns:IService_UpdateSongsForParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddRating">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/AddRating" message="tns:IService_AddRating_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/AddRatingResponse" message="tns:IService_AddRating_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CalculateTotalSongRating">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CalculateTotalSongRating" message="tns:IService_CalculateTotalSongRating_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CalculateTotalSongRatingResponse" message="tns:IService_CalculateTotalSongRating_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllRatings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAllRatings" message="tns:IService_GetAllRatings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAllRatingsResponse" message="tns:IService_GetAllRatings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RemoveRating">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveRating" message="tns:IService_RemoveRating_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveRatingResponse" message="tns:IService_RemoveRating_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="VoteSong">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/VoteSong" message="tns:IService_VoteSong_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/VoteSongResponse" message="tns:IService_VoteSong_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="BroadcastToClient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/BroadcastToClient" message="tns:IService_BroadcastToClient_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TCPEndpoint" type="tns:IService">
+    <wsp:PolicyReference URI="#TCPEndpoint_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegisterClient">
+      <soap12:operation soapAction="http://tempuri.org/IService/RegisterClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyServer">
+      <soap12:operation soapAction="http://tempuri.org/IService/NotifyServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLogInAccount">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddLogInAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartyById">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetPartyById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNotJoinedParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllNotJoinedParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllJoinedParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllJoinedParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOwner">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetOwner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserForID">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUserForID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUsers">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAfterFK">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUserAfterFK" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPartiesOfUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllPartiesOfUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSongInPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddSongInPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSongFromPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetSongFromPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSongs">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllSongs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSongFromPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveSongFromPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSongsForParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateSongsForParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateTotalSongRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/CalculateTotalSongRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRatings">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllRatings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoteSong">
+      <soap12:operation soapAction="http://tempuri.org/IService/VoteSong" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BroadcastToClient">
+      <soap12:operation soapAction="http://tempuri.org/IService/BroadcastToClient" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HttpEndpoint" type="tns:IService">
+    <wsp:PolicyReference URI="#HttpEndpoint_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterClient">
+      <soap12:operation soapAction="http://tempuri.org/IService/RegisterClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyServer">
+      <soap12:operation soapAction="http://tempuri.org/IService/NotifyServer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLogInAccount">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddLogInAccount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPartyById">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetPartyById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNotJoinedParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllNotJoinedParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllJoinedParties">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllJoinedParties" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOwner">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetOwner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/CreateUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserForID">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUserForID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUsers">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAfterFK">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetUserAfterFK" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPartiesOfUser">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllPartiesOfUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserAtParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateUserAtParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSongInPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddSongInPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSongFromPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetSongFromPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllSongs">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllSongs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSongFromPartyPlaylist">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveSongFromPartyPlaylist" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSongsForParty">
+      <soap12:operation soapAction="http://tempuri.org/IService/UpdateSongsForParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/AddRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CalculateTotalSongRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/CalculateTotalSongRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRatings">
+      <soap12:operation soapAction="http://tempuri.org/IService/GetAllRatings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveRating">
+      <soap12:operation soapAction="http://tempuri.org/IService/RemoveRating" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VoteSong">
+      <soap12:operation soapAction="http://tempuri.org/IService/VoteSong" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BroadcastToClient">
+      <soap12:operation soapAction="http://tempuri.org/IService/BroadcastToClient" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="TCPEndpoint" binding="tns:TCPEndpoint">
+      <soap12:address location="net.tcp://localhost:1337/WCFService/Service/ServiceTCP" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:1337/WCFService/Service/ServiceTCP</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="HttpEndpoint" binding="tns:HttpEndpoint">
+      <soap12:address location="http://localhost:8079/WCFService/Service/ServiceHTTP" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://localhost:8079/WCFService/Service/ServiceHTTP</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
