@@ -1,0 +1,17 @@
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\WCFService.dll.config
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\WCFService.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\WCFService.pdb
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\BusinessLogicLayer.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\DataAccessLayer.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\EntityFramework.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\BusinessLogicLayer.pdb
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\BusinessLogicLayer.dll.config
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\DataAccessLayer.pdb
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\DataAccessLayer.dll.config
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\EntityFramework.xml
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\obj\Debug\WCFService.csprojResolveAssemblyReference.cache
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\obj\Debug\WCFService.csproj.CoreCompileInputs.cache
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\obj\Debug\WCFService.dll
+C:\Users\RedJohn\Source\Repos\Final-Project-sem-3\WCFService\obj\Debug\WCFService.pdb

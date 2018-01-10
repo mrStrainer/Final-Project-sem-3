@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ModelChooseEm" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="EntitiesChooseEm" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BlacklistTables" EntityType="ModelChooseEm.BlacklistTable" />
+    <EntitySet Name="PartyTables" EntityType="ModelChooseEm.PartyTable" />
+    <EntitySet Name="SongRatingFromPartyTables" EntityType="ModelChooseEm.SongRatingFromPartyTable" />
+    <EntitySet Name="SongsForPartyTables" EntityType="ModelChooseEm.SongsForPartyTable" />
+    <EntitySet Name="sysdiagrams" EntityType="ModelChooseEm.sysdiagram" />
+    <EntitySet Name="UserLoginTables" EntityType="ModelChooseEm.UserLoginTable" />
+    <EntitySet Name="UsersAtParties" EntityType="ModelChooseEm.UsersAtParty" />
+    <EntitySet Name="UserTables" EntityType="ModelChooseEm.UserTable" />
+    <EntitySet Name="ZIPTables" EntityType="ModelChooseEm.ZIPTable" />
+    <AssociationSet Name="FK_BlacklistTable_PartyTable" Association="ModelChooseEm.FK_BlacklistTable_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTables" />
+      <End Role="BlacklistTable" EntitySet="BlacklistTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PartyTable_UserTable" Association="ModelChooseEm.FK_PartyTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="PartyTable" EntitySet="PartyTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongsForPartyTable_PartyTable" Association="ModelChooseEm.FK_SongsForPartyTable_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTables" />
+      <End Role="SongsForPartyTable" EntitySet="SongsForPartyTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersAtParties_PartyTable" Association="ModelChooseEm.FK_UsersAtParties_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTables" />
+      <End Role="UsersAtParty" EntitySet="UsersAtParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongRatingFromPartyTable_SongsForPartyTable" Association="ModelChooseEm.FK_SongRatingFromPartyTable_SongsForPartyTable">
+      <End Role="SongsForPartyTable" EntitySet="SongsForPartyTables" />
+      <End Role="SongRatingFromPartyTable" EntitySet="SongRatingFromPartyTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongRatingFromPartyTable_UserTable" Association="ModelChooseEm.FK_SongRatingFromPartyTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="SongRatingFromPartyTable" EntitySet="SongRatingFromPartyTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_ToTable" Association="ModelChooseEm.FK_Table_ToTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="UserLoginTable" EntitySet="UserLoginTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersAtParties_UserTable" Association="ModelChooseEm.FK_UsersAtParties_UserTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="UsersAtParty" EntitySet="UsersAtParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserTable_ZIPTable" Association="ModelChooseEm.FK_UserTable_ZIPTable">
+      <End Role="ZIPTable" EntitySet="ZIPTables" />
+      <End Role="UserTable" EntitySet="UserTables" />
+    </AssociationSet>
+    <EntitySet Name="FriendTables" EntityType="ModelChooseEm.FriendTable" />
+    <AssociationSet Name="FK_FriendTable_UserTable" Association="ModelChooseEm.FK_FriendTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="FriendTable" EntitySet="FriendTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FriendTable_UserTable1" Association="ModelChooseEm.FK_FriendTable_UserTable1">
+      <End Role="UserTable" EntitySet="UserTables" />
+      <End Role="FriendTable" EntitySet="FriendTables" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BlacklistTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="Int64" Nullable="false" />
+    <Property Name="songURL" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="PartyTable" Relationship="ModelChooseEm.FK_BlacklistTable_PartyTable" FromRole="BlacklistTable" ToRole="PartyTable" />
+  </EntityType>
+  <EntityType Name="PartyTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ownerID" Type="Int64" Nullable="false" />
+    <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="locationLatitude" Type="Double" />
+    <Property Name="locationLongitude" Type="Double" />
+    <Property Name="privacy" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BlacklistTables" Relationship="ModelChooseEm.FK_BlacklistTable_PartyTable" FromRole="PartyTable" ToRole="BlacklistTable" />
+    <NavigationProperty Name="UserTable" Relationship="ModelChooseEm.FK_PartyTable_UserTable" FromRole="PartyTable" ToRole="UserTable" />
+    <NavigationProperty Name="SongsForPartyTables" Relationship="ModelChooseEm.FK_SongsForPartyTable_PartyTable" FromRole="PartyTable" ToRole="SongsForPartyTable" />
+    <NavigationProperty Name="UsersAtParties" Relationship="ModelChooseEm.FK_UsersAtParties_PartyTable" FromRole="PartyTable" ToRole="UsersAtParty" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+    <Property Name="AvailablePlaces" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SongRatingFromPartyTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="Int64" Nullable="false" />
+    <Property Name="userID" Type="Int64" Nullable="false" />
+    <Property Name="songURL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="voteType" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SongsForPartyTable" Relationship="ModelChooseEm.FK_SongRatingFromPartyTable_SongsForPartyTable" FromRole="SongRatingFromPartyTable" ToRole="SongsForPartyTable" />
+    <NavigationProperty Name="UserTable" Relationship="ModelChooseEm.FK_SongRatingFromPartyTable_UserTable" FromRole="SongRatingFromPartyTable" ToRole="UserTable" />
+  </EntityType>
+  <EntityType Name="SongsForPartyTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="Int64" Nullable="false" />
+    <Property Name="songURL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="rating" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PartyTable" Relationship="ModelChooseEm.FK_SongsForPartyTable_PartyTable" FromRole="SongsForPartyTable" ToRole="PartyTable" />
+    <NavigationProperty Name="SongRatingFromPartyTables" Relationship="ModelChooseEm.FK_SongRatingFromPartyTable_SongsForPartyTable" FromRole="SongsForPartyTable" ToRole="SongRatingFromPartyTable" />
+    <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserLoginTable">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="65" FixedLength="false" Unicode="true" />
+    <Property Name="userID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="UserTable" Relationship="ModelChooseEm.FK_Table_ToTable" FromRole="UserLoginTable" ToRole="UserTable" />
+  </EntityType>
+  <EntityType Name="UsersAtParty">
+    <Key>
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="partyID" />
+    </Key>
+    <Property Name="userID" Type="Int64" Nullable="false" />
+    <Property Name="partyID" Type="Int64" Nullable="false" />
+    <Property Name="adminPrivileges" Type="Boolean" Nullable="false" />
+    <Property Name="status" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="PartyTable" Relationship="ModelChooseEm.FK_UsersAtParties_PartyTable" FromRole="UsersAtParty" ToRole="PartyTable" />
+    <NavigationProperty Name="UserTable" Relationship="ModelChooseEm.FK_UsersAtParties_UserTable" FromRole="UsersAtParty" ToRole="UserTable" />
+  </EntityType>
+  <EntityType Name="UserTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="accountType" Type="Boolean" Nullable="false" />
+    <Property Name="zip" Type="Int32" Nullable="false" />
+    <Property Name="currentPartyID" Type="Int64" />
+    <NavigationProperty Name="PartyTables" Relationship="ModelChooseEm.FK_PartyTable_UserTable" FromRole="UserTable" ToRole="PartyTable" />
+    <NavigationProperty Name="SongRatingFromPartyTables" Relationship="ModelChooseEm.FK_SongRatingFromPartyTable_UserTable" FromRole="UserTable" ToRole="SongRatingFromPartyTable" />
+    <NavigationProperty Name="UserLoginTables" Relationship="ModelChooseEm.FK_Table_ToTable" FromRole="UserTable" ToRole="UserLoginTable" />
+    <NavigationProperty Name="UsersAtParties" Relationship="ModelChooseEm.FK_UsersAtParties_UserTable" FromRole="UserTable" ToRole="UsersAtParty" />
+    <NavigationProperty Name="ZIPTable" Relationship="ModelChooseEm.FK_UserTable_ZIPTable" FromRole="UserTable" ToRole="ZIPTable" />
+    <NavigationProperty Name="FriendTables" Relationship="ModelChooseEm.FK_FriendTable_UserTable" FromRole="UserTable" ToRole="FriendTable" />
+    <NavigationProperty Name="FriendTables1" Relationship="ModelChooseEm.FK_FriendTable_UserTable1" FromRole="UserTable" ToRole="FriendTable" />
+  </EntityType>
+  <EntityType Name="ZIPTable">
+    <Key>
+      <PropertyRef Name="zip" />
+    </Key>
+    <Property Name="zip" Type="Int32" Nullable="false" />
+    <Property Name="city" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserTables" Relationship="ModelChooseEm.FK_UserTable_ZIPTable" FromRole="ZIPTable" ToRole="UserTable" />
+  </EntityType>
+  <Association Name="FK_BlacklistTable_PartyTable">
+    <End Type="ModelChooseEm.PartyTable" Role="PartyTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.BlacklistTable" Role="BlacklistTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BlacklistTable">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PartyTable_UserTable">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.PartyTable" Role="PartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PartyTable">
+        <PropertyRef Name="ownerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongsForPartyTable_PartyTable">
+    <End Type="ModelChooseEm.PartyTable" Role="PartyTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.SongsForPartyTable" Role="SongsForPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SongsForPartyTable">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersAtParties_PartyTable">
+    <End Type="ModelChooseEm.PartyTable" Role="PartyTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.UsersAtParty" Role="UsersAtParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersAtParty">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongRatingFromPartyTable_SongsForPartyTable">
+    <End Type="ModelChooseEm.SongsForPartyTable" Role="SongsForPartyTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.SongRatingFromPartyTable" Role="SongRatingFromPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SongsForPartyTable">
+        <PropertyRef Name="partyID" />
+        <PropertyRef Name="songURL" />
+      </Principal>
+      <Dependent Role="SongRatingFromPartyTable">
+        <PropertyRef Name="partyID" />
+        <PropertyRef Name="songURL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongRatingFromPartyTable_UserTable">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.SongRatingFromPartyTable" Role="SongRatingFromPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SongRatingFromPartyTable">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_ToTable">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.UserLoginTable" Role="UserLoginTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserLoginTable">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersAtParties_UserTable">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.UsersAtParty" Role="UsersAtParty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersAtParty">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserTable_ZIPTable">
+    <End Type="ModelChooseEm.ZIPTable" Role="ZIPTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ZIPTable">
+        <PropertyRef Name="zip" />
+      </Principal>
+      <Dependent Role="UserTable">
+        <PropertyRef Name="zip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FriendTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idOne" Type="Int64" Nullable="false" />
+    <Property Name="idTwo" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="UserTable" Relationship="ModelChooseEm.FK_FriendTable_UserTable" FromRole="FriendTable" ToRole="UserTable" />
+    <NavigationProperty Name="UserTable1" Relationship="ModelChooseEm.FK_FriendTable_UserTable1" FromRole="FriendTable" ToRole="UserTable" />
+  </EntityType>
+  <Association Name="FK_FriendTable_UserTable">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.FriendTable" Role="FriendTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FriendTable">
+        <PropertyRef Name="idOne" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FriendTable_UserTable1">
+    <End Type="ModelChooseEm.UserTable" Role="UserTable" Multiplicity="1" />
+    <End Type="ModelChooseEm.FriendTable" Role="FriendTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FriendTable">
+        <PropertyRef Name="idTwo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

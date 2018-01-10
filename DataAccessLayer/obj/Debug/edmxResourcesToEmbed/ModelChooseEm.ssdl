@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ModelChooseEm.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BlacklistTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="bigint" Nullable="false" />
+    <Property Name="songURL" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FriendTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idOne" Type="bigint" Nullable="false" />
+    <Property Name="idTwo" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PartyTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ownerID" Type="bigint" Nullable="false" />
+    <Property Name="startDate" Type="datetime" Nullable="false" />
+    <Property Name="endDate" Type="datetime" Nullable="false" />
+    <Property Name="locationLatitude" Type="float" />
+    <Property Name="locationLongitude" Type="float" />
+    <Property Name="privacy" Type="bit" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="AvailablePlaces" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SongRatingFromPartyTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="bigint" Nullable="false" />
+    <Property Name="userID" Type="bigint" Nullable="false" />
+    <Property Name="songURL" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="voteType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SongsForPartyTable">
+    <Key>
+      <PropertyRef Name="partyID" />
+      <PropertyRef Name="songURL" />
+    </Key>
+    <Property Name="partyID" Type="bigint" Nullable="false" />
+    <Property Name="songURL" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="rating" Type="int" Nullable="false" />
+    <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="UserLoginTable">
+    <Key>
+      <PropertyRef Name="email" />
+    </Key>
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="65" Nullable="false" />
+    <Property Name="userID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersAtParties">
+    <Key>
+      <PropertyRef Name="userID" />
+      <PropertyRef Name="partyID" />
+    </Key>
+    <Property Name="userID" Type="bigint" Nullable="false" />
+    <Property Name="partyID" Type="bigint" Nullable="false" />
+    <Property Name="adminPrivileges" Type="bit" Nullable="false" />
+    <Property Name="status" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="accountType" Type="bit" Nullable="false" />
+    <Property Name="zip" Type="int" Nullable="false" />
+    <Property Name="currentPartyID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="ZIPTable">
+    <Key>
+      <PropertyRef Name="zip" />
+    </Key>
+    <Property Name="zip" Type="int" Nullable="false" />
+    <Property Name="city" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BlacklistTable_PartyTable">
+    <End Role="PartyTable" Type="Self.PartyTable" Multiplicity="1" />
+    <End Role="BlacklistTable" Type="Self.BlacklistTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BlacklistTable">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FriendTable_UserTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="FriendTable" Type="Self.FriendTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FriendTable">
+        <PropertyRef Name="idOne" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FriendTable_UserTable1">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="FriendTable" Type="Self.FriendTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FriendTable">
+        <PropertyRef Name="idTwo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PartyTable_UserTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="PartyTable" Type="Self.PartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PartyTable">
+        <PropertyRef Name="ownerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongRatingFromPartyTable_SongsForPartyTable">
+    <End Role="SongsForPartyTable" Type="Self.SongsForPartyTable" Multiplicity="1" />
+    <End Role="SongRatingFromPartyTable" Type="Self.SongRatingFromPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SongsForPartyTable">
+        <PropertyRef Name="partyID" />
+        <PropertyRef Name="songURL" />
+      </Principal>
+      <Dependent Role="SongRatingFromPartyTable">
+        <PropertyRef Name="partyID" />
+        <PropertyRef Name="songURL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongRatingFromPartyTable_UserTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="SongRatingFromPartyTable" Type="Self.SongRatingFromPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SongRatingFromPartyTable">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SongsForPartyTable_PartyTable">
+    <End Role="PartyTable" Type="Self.PartyTable" Multiplicity="1" />
+    <End Role="SongsForPartyTable" Type="Self.SongsForPartyTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SongsForPartyTable">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Table_ToTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="UserLoginTable" Type="Self.UserLoginTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserLoginTable">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersAtParties_PartyTable">
+    <End Role="PartyTable" Type="Self.PartyTable" Multiplicity="1" />
+    <End Role="UsersAtParties" Type="Self.UsersAtParties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PartyTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersAtParties">
+        <PropertyRef Name="partyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersAtParties_UserTable">
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="1" />
+    <End Role="UsersAtParties" Type="Self.UsersAtParties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTable">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersAtParties">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserTable_ZIPTable">
+    <End Role="ZIPTable" Type="Self.ZIPTable" Multiplicity="1" />
+    <End Role="UserTable" Type="Self.UserTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ZIPTable">
+        <PropertyRef Name="zip" />
+      </Principal>
+      <Dependent Role="UserTable">
+        <PropertyRef Name="zip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelChooseEmStoreContainer">
+    <EntitySet Name="BlacklistTable" EntityType="Self.BlacklistTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FriendTable" EntityType="Self.FriendTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PartyTable" EntityType="Self.PartyTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SongRatingFromPartyTable" EntityType="Self.SongRatingFromPartyTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SongsForPartyTable" EntityType="Self.SongsForPartyTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserLoginTable" EntityType="Self.UserLoginTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersAtParties" EntityType="Self.UsersAtParties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserTable" EntityType="Self.UserTable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ZIPTable" EntityType="Self.ZIPTable" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BlacklistTable_PartyTable" Association="Self.FK_BlacklistTable_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTable" />
+      <End Role="BlacklistTable" EntitySet="BlacklistTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FriendTable_UserTable" Association="Self.FK_FriendTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="FriendTable" EntitySet="FriendTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FriendTable_UserTable1" Association="Self.FK_FriendTable_UserTable1">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="FriendTable" EntitySet="FriendTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PartyTable_UserTable" Association="Self.FK_PartyTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="PartyTable" EntitySet="PartyTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongRatingFromPartyTable_SongsForPartyTable" Association="Self.FK_SongRatingFromPartyTable_SongsForPartyTable">
+      <End Role="SongsForPartyTable" EntitySet="SongsForPartyTable" />
+      <End Role="SongRatingFromPartyTable" EntitySet="SongRatingFromPartyTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongRatingFromPartyTable_UserTable" Association="Self.FK_SongRatingFromPartyTable_UserTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="SongRatingFromPartyTable" EntitySet="SongRatingFromPartyTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SongsForPartyTable_PartyTable" Association="Self.FK_SongsForPartyTable_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTable" />
+      <End Role="SongsForPartyTable" EntitySet="SongsForPartyTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Table_ToTable" Association="Self.FK_Table_ToTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="UserLoginTable" EntitySet="UserLoginTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersAtParties_PartyTable" Association="Self.FK_UsersAtParties_PartyTable">
+      <End Role="PartyTable" EntitySet="PartyTable" />
+      <End Role="UsersAtParties" EntitySet="UsersAtParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersAtParties_UserTable" Association="Self.FK_UsersAtParties_UserTable">
+      <End Role="UserTable" EntitySet="UserTable" />
+      <End Role="UsersAtParties" EntitySet="UsersAtParties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserTable_ZIPTable" Association="Self.FK_UserTable_ZIPTable">
+      <End Role="ZIPTable" EntitySet="ZIPTable" />
+      <End Role="UserTable" EntitySet="UserTable" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
